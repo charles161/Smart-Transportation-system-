@@ -1,0 +1,38 @@
+{
+  "name": "tiehack",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "mqtt": "^2.18.3",
+    "native-base": "^2.7.1",
+    "react": "16.4.1",
+    "react-native": "0.56.0",
+    "react-native-ble-manager": "^6.5.0",
+    "react-native-google-signin": "^1.0.0-rc1",
+    "react-native-image-picker": "^0.26.10",
+    "react-native-maps": "^0.21.0",
+    "react-native-navigation": "^1.1.476",
+    "react-native-paho-mqtt": "^0.1.1",
+    "react-native-vector-icons": "^5.0.0",
+    "react-number-format": "^3.5.1",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "rn-viewpager": "^1.2.9",
+    "socket.io-client": "^2.1.1"
+  },
+  "devDependencies": {
+    "babel-jest": "23.4.0",
+    "babel-preset-react-native": "^5",
+    "jest": "23.4.1",
+    "react-test-renderer": "16.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

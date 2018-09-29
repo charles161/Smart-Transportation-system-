@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "232271856515",
+    "firebase_url": "https://headsup-76a6a.firebaseio.com",
+    "project_id": "headsup-76a6a",
+    "storage_bucket": "headsup-76a6a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232271856515:android:738fcdabf5bbeb14",
+        "android_client_info": {
+          "package_name": "com.headsup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "232271856515-ddkdttsqkpbuvdcemp6sqit0c1hqsge4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.headsup",
+            "certificate_hash": "540f907202d4ef7b778c92f3a1391506455c1d70"
+          }
+        },
+        {
+          "client_id": "232271856515-bthn7nslovsiqqqm1pnq7308vdcdeguo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALU7EMtTFnpLyp_iG3n09y3KMKvQYxpjw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "232271856515-bthn7nslovsiqqqm1pnq7308vdcdeguo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
