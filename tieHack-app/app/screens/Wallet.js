@@ -18,7 +18,7 @@ const myStorage = {
   },
 };
 
-const client = new Client({ uri: 'ws://192.168.40.36:3000/ws', clientId: '', storage: myStorage });
+const client = new Client({ uri: 'ws://10.0.10.97:3000/ws', clientId: '', storage: myStorage });
 
 export default class Connect extends Component {
   componentWillMount = () => {
@@ -86,14 +86,14 @@ export default class Connect extends Component {
         client.subscribe('transactions')
         alert('onConnect');
       })
-      // .then(() => {
-      //   setInterval(() => {
-      //     const { x, y, z, lat, long } = this.state;
-      //     const message = new Message(JSON.stringify({ x, y, z, lat, long, clientId }));
-      //     message.destinationName = 'sense';
-      //     client.send(message);
-      //   }, 1000);
-      // })
+      .then(() => {
+        setInterval(() => {
+          
+          const message = new Message("cool");
+          message.destinationName = 'pi';
+          client.send(message);
+        }, 1000);
+      })
       .catch((responseObject) => {
         if (responseObject.errorCode !== 0) {
           alert('onConnectionLost:' + responseObject.errorMessage);

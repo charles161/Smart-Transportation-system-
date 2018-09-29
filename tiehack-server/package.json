@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tunnel": "lt --port 3000 --subdomain iqube",
+    "broker": "node broker.js",
+    "server": "node app.js",
+    "start": "npm-run-all --parallel broker server tunnel"
   },
   "author": "charles",
   "license": "ISC",
   "dependencies": {
     "mosca": "^2.7.0",
-    "mqtt": "^2.15.0"
+    "mqtt": "^2.15.0",
+    "npm-run-all": "^4.1.3"
   }
 }
