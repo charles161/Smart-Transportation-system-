@@ -1,13 +1,13 @@
 import { Navigation } from 'react-native-navigation';
-import { AsyncStorage,Dimensions } from 'react-native'
+import { Provider } from 'react-redux';
+import store from './store';
 import Ride from './screens/Ride';
 import Wallet from './screens/Wallet';
 
-Navigation.registerComponent('Ride', () => Ride);
-Navigation.registerComponent('Wallet', () => Wallet);
+Navigation.registerComponent('Ride', () => Ride,store,Provider);
+Navigation.registerComponent('Wallet', () => Wallet, store, Provider);
 
 export default async function () {
-//await AsyncStorage.getItem('user')
   if (true) {
     Navigation.startTabBasedApp({
       tabs: [

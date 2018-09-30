@@ -1,11 +1,12 @@
 window.navigator.userAgent = 'ReactNative';
 import React, { Component } from 'react'
-import { View, Dimensions, TouchableOpacity,TextInput, Text } from 'react-native';
-import { Container, Header, Content,  Icon} from 'native-base';
+import { View, Dimensions, TouchableOpacity,TextInput } from 'react-native';
+import { Container, Header, Content,  Icon,Button,Text} from 'native-base';
 import {RedButton,RowSections} from '../components'
 import MapView, {Marker} from 'react-native-maps';
-import { Client, Message } from 'react-native-paho-mqtt';
 const { width, height } = Dimensions.get('window');
+import { connect } from 'react-redux';
+import { client,Message } from '../action'
 
 let LATITUDEDELTA = 0.0922;
 let LONGITUDEDELTA = LATITUDEDELTA * (width / height);
@@ -19,7 +20,7 @@ const myStorage = {
   },
 };
 
-export default class Track extends Component {
+ class Track extends Component {
 
   constructor(props) {
     super(props);
@@ -30,7 +31,13 @@ export default class Track extends Component {
         latitudeDelta: LATITUDEDELTA,
         longitudeDelta: LONGITUDEDELTA,
       },
-      nearbyPeople:[],
+      destinationRegion: {
+        latitude: 11.077544,
+        longitude: 76.988968,
+        latitudeDelta: LATITUDEDELTA,
+        longitudeDelta: LONGITUDEDELTA,
+      },
+      nearbyTransport:[],
       messages: [],
       userId: null,
       newmessage:'',
@@ -86,12 +93,12 @@ export default class Track extends Component {
   }
 
   _storeMessages(messages) {
-    let prevNearby = this.state.nearbyPeople;
+    let prevNearby = this.state.nearbyTransport;
     let reg = messages[0].text.split(';');
     let latitude = Number(reg[0]), longitude = Number(reg[1]);
     
     prevNearby.push({latitude,longitude});
-    this.setState({nearbyPeople:prevNearby});
+    this.setState({nearbyTransport:prevNearby});
   }
 
   onConnect() {
@@ -112,30 +119,6 @@ onMessageArrived(message) {
 }
 
   componentDidMount() {
-    // const client = new Client({ uri: 'ws://10.1.75.71:3000/ws', clientId: '', storage: myStorage });
-    // client.on('connectionLost', (responseObject) => {
-    //   if (responseObject.errorCode !== 0) {
-    //     alert(responseObject.errorMessage);
-    //   }
-    // });
-    // client.on('messageReceived', (message) => {
-    //   alert(message.payloadString);
-    // });
-    // // connect the client
-    // client.connect()
-    //   .then(() => {
-    //     alert('onConnect');
-    //   })
-    //   .then(() => {
-    //     const message = new Message('Hello');
-    //     message.destinationName = 'World';
-    //     client.send(message);
-    //   })
-    //   .catch((responseObject) => {
-    //     if (responseObject.errorCode !== 0) {
-    //      alert('onConnectionLost:' + responseObject.errorMessage);
-    //     }
-    //   });
 
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -164,6 +147,12 @@ onMessageArrived(message) {
       //this.socket.emit('message', message);
     })
   }
+
+   onMessageSend = () => {
+     const message = new Message(JSON.stringify([this.state.initialRegion,this.state.destinationRegion]));
+     message.destinationName = 'maps';
+     client.send(message);
+   }
 
   secondScreen = () => {
     this.props.navigator.push({
@@ -199,25 +188,40 @@ onMessageArrived(message) {
   render() {
   
     return (
-      <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center'}} >
-       <View>
+      <View style={{ flex: 1, alignItems: 'center'}} >
+      
           <MapView
             style={{ width, height: this.state.zoomed ? 400 : 220}}
-            region={this.state.initialRegion}>
+            region={this.state.destinationRegion}>
             <Marker
+            title="current location"
               coordinate={this.state.initialRegion}
-              pinColor='#0000FF'
+              key={1}
             />
+          <Marker draggable = {true}
+          
+          title="destination"
+          key={2}
+            coordinate={this.state.destinationRegion}
+            onDrag={(e) => this.setState({ destinationRegion: e.nativeEvent.coordinate })}
+            onDragStart={(e) => this.setState({ destinationRegion: e.nativeEvent.coordinate })}
+            onDragEnd={(e) => this.setState({ destinationRegion: e.nativeEvent.coordinate })}
+            pinColor='#0000FF'
+          />
             {
-              this.state.nearbyPeople.length ? this.state.nearbyPeople.map(val => {
+              this.state.nearbyTransport.length ? this.state.nearbyTransport.map(val => {
                 const { latitude, longitude } = val;
                 return <Marker key={latitude} coordinate={{ latitude, longitude, latitudeDelta: LATITUDEDELTA, longitudeDelta: LONGITUDEDELTA }} title='coollllllllll' />
               }) : null
             }
           </MapView>
+        
           <View>
+            <Button onPress={() => this.onMessageSend()}>
+              <Text>Check Out for Ride...</Text>
+            </Button>
+            <Text style={{padding:20,fontWeight:"bold"}}>{this.props.info}</Text>
           </View>
-       </View>
       </View>
     )
   }
@@ -225,5 +229,15 @@ onMessageArrived(message) {
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID)
   }
-
 }
+
+const mapStateToProps = ({ getCredits,getInfo }) => {
+  const credits = getCredits.response;
+  const info = getInfo.response;
+  return {
+    credits, info
+  };
+};
+
+
+export default connect(mapStateToProps, null)(Track);

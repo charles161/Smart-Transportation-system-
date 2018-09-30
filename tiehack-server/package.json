@@ -8,7 +8,7 @@
     "tunnel": "lt --port 3000 --subdomain iqube",
     "broker": "node broker.js",
     "server": "node app.js",
-    "start": "npm-run-all --parallel broker server tunnel"
+    "start": "npm-run-all --parallel broker server "
   },
   "author": "charles",
   "license": "ISC",

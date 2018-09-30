@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {  Button,  Text } from 'native-base';
-
 export class RedButton extends Component {
   render() {
     return (
