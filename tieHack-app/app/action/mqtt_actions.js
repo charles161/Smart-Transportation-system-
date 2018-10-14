@@ -51,7 +51,7 @@ export const mqtt = () => {
     await client.connect()
       .then(() => {
         client.subscribe('balance');
-        client.subscribe('transactions')
+        client.subscribe('last_transactions')
         client.subscribe('credits')
         client.subscribe('info')
       })

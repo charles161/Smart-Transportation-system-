@@ -191,7 +191,7 @@ onMessageArrived(message) {
       <View style={{ flex: 1, alignItems: 'center'}} >
       
           <MapView
-            style={{ width, height: this.state.zoomed ? 400 : 220}}
+            style={{ width, height: 400}}
             region={this.state.destinationRegion}>
             <Marker
             title="current location"
@@ -220,7 +220,7 @@ onMessageArrived(message) {
             <Button onPress={() => this.onMessageSend()}>
               <Text>Check Out for Ride...</Text>
             </Button>
-            <Text style={{padding:20,fontWeight:"bold"}}>{this.props.info}</Text>
+            <Text style={{padding:20,fontWeight:"bold",color:'black'}}>{this.props.info}</Text>
           </View>
       </View>
     )
